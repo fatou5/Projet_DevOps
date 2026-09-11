@@ -1,0 +1,10 @@
+# Propriétaire des fichiers Python
+*.py @fatou5
+
+# Documentation
+*.md @fatou5
+
+# Fichiers de configuration
+*.yml @fatou5
+*.yaml @fatou5
+*.json @fatou5
