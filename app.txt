@@ -1,3 +1,4 @@
 Application OK
 Configuration OK
 Database OK
+BUG: application unavailable
