@@ -25,3 +25,4 @@ Les nouvelles fonctionnalités sont développées dans des branches :
 feature/<nom-de-la-fonctionnalite>
 
 Correction urgente appliquée dans le cadre de l'incident.
+Commit signing configured with SSH.
