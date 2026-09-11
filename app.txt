@@ -4,3 +4,4 @@ Database OK
 BUG: application unavailable
 Monitoring OK
 Logs OK
+Security OK
