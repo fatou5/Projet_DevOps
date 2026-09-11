@@ -1,2 +1,3 @@
 Application OK
 Configuration OK
+Database OK
