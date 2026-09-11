@@ -1,5 +1,8 @@
 # Git Workshop
 
+Projet réalisé dans le cadre d'un atelier de développement et DevOps.
+
+
 ## Stratégie Git
 
 Ce projet utilise une stratégie **Trunk-Based Development**.
