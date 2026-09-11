@@ -1,6 +1,11 @@
 # Git Workshop
 
+
 Projet réalisé dans le cadre de l'atelier Git et DevOps.
+
+Projet réalisé dans le cadre d'un atelier de développement et DevOps.
+
+
 
 ## Stratégie Git
 
