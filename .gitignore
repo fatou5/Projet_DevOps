@@ -1,0 +1,11 @@
+
+---
+
+# 6. Créer le `.gitignore`
+
+C'est important dans l'énoncé : **le `.gitignore` doit être créé avant le premier commit**.
+
+Crée-le :
+
+```bash
+touch .gitignore
