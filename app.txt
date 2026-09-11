@@ -3,3 +3,4 @@ Configuration OK
 Database OK
 BUG: application unavailable
 Monitoring OK
+Logs OK
