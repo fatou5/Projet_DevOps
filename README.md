@@ -1,3 +1,13 @@
+[![CI](https://github.com/fatou5/Projet_DevOps/actions/workflows/tests.yml/badge.svg)](https://github.com/fatou5/Projet_DevOps/actions/workflows/tests.yml)
+
+## CI
+
+Le pipeline GitHub Actions se déclenche sur les Pull Requests et sur les
+pushs vers `main`. Il exécute un job de lint avec Flake8 puis les tests
+avec pytest sur Python 3.10, 3.11 et 3.12. Les dépendances pip sont
+mises en cache et les rapports de couverture HTML sont conservés comme
+artefacts.
+
 # Git Workshop
 
 
