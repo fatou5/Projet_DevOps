@@ -25,7 +25,4 @@ Les nouvelles fonctionnalités sont développées dans des branches :
 feature/<nom-de-la-fonctionnalite>
 
 Correction urgente appliquée dans le cadre de l'incident.
-
-## Workflow Git
-
-Le projet utilise des branches courtes et des Pull Requests pour faire relire les modifications avant leur intégration dans main.
+Commit signing configured with SSH.
