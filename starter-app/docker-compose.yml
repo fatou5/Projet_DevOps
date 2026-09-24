@@ -1,0 +1,47 @@
+services:
+  web:
+    image: projet-devops:multistage
+    container_name: projet-devops-web
+    ports:
+      - "5000:5000"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    networks:
+      - app-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health')"
+      interval: 10s
+      timeout: 3s
+      start_period: 5s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: projet-devops-redis
+    networks:
+      - app-network
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+networks:
+  app-network:
+
+volumes:
+  redis-data:
