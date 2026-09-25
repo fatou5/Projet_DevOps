@@ -36,7 +36,7 @@ def health():
 def status():
     return jsonify(
         service="projet-devops-groupe-demo",
-        version="1.0",
+        version="1.1",
         color=os.getenv("APP_COLOR", "unknown"),
     ), 200
 
