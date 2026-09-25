@@ -12,6 +12,10 @@ COMPOSE_FILE="$ROOT_DIR/starter-app/docker-compose.yml"
 MAX_ATTEMPTS=12
 SLEEP_SECONDS=5
 
+# SHA du commit attendu pour le déploiement.
+# GitHub Actions pourra fournir DEPLOY_SHA=${{ github.sha }}.
+EXPECTED_SHA="${DEPLOY_SHA:-unknown}"
+
 if [[ ! -f "$STATE_FILE" ]]; then
     echo "ERROR: state file not found: $STATE_FILE"
     exit 1
@@ -36,6 +40,7 @@ NEW_CONTAINER="projet-devops-app-$INACTIVE_COLOR"
 
 echo "Active color: $ACTIVE_COLOR"
 echo "Inactive color: $INACTIVE_COLOR"
+echo "Expected SHA: $EXPECTED_SHA"
 
 echo "Starting $INACTIVE_COLOR..."
 
@@ -81,9 +86,12 @@ STATUS="$(
         python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:5000/status', timeout=5).read().decode())"
 )"
 
-if [[ "$STATUS" != *"\"color\":\"$INACTIVE_COLOR\""* ]]; then
+if [[ "$STATUS" != *"\"color\":\"$INACTIVE_COLOR\""* ]] ||
+   [[ "$STATUS" != *"\"sha\":\"$EXPECTED_SHA\""* ]]; then
+
     echo "ERROR: application smoke test failed."
     echo "Expected color: $INACTIVE_COLOR"
+    echo "Expected SHA: $EXPECTED_SHA"
     echo "Response: $STATUS"
 
     echo "Stopping failed deployment..."
@@ -166,7 +174,9 @@ while (( attempt <= MAX_ATTEMPTS )); do
             http://localhost:8080/status
     )"; then
 
-        if [[ "$TRAFFIC_STATUS" == *"\"color\":\"$INACTIVE_COLOR\""* ]]; then
+        if [[ "$TRAFFIC_STATUS" == *"\"color\":\"$INACTIVE_COLOR\""* ]] &&
+           [[ "$TRAFFIC_STATUS" == *"\"sha\":\"$EXPECTED_SHA\""* ]]; then
+
             TRAFFIC_OK=true
             break
         fi
@@ -174,6 +184,7 @@ while (( attempt <= MAX_ATTEMPTS )); do
 
     echo "Traffic attempt $attempt/$MAX_ATTEMPTS failed."
     echo "Expected color: $INACTIVE_COLOR"
+    echo "Expected SHA: $EXPECTED_SHA"
     echo "Response: $TRAFFIC_STATUS"
     echo "Retrying in ${SLEEP_SECONDS}s..."
 
@@ -183,6 +194,8 @@ done
 
 if [[ "$TRAFFIC_OK" != true ]]; then
     echo "ERROR: Nginx traffic smoke test failed."
+    echo "Expected color: $INACTIVE_COLOR"
+    echo "Expected SHA: $EXPECTED_SHA"
     echo "The active color remains: $ACTIVE_COLOR"
 
     restore_old_version
@@ -202,3 +215,4 @@ printf '%s\n' "$INACTIVE_COLOR" > "$STATE_FILE"
 
 echo "Deployment successful."
 echo "Active color: $INACTIVE_COLOR"
+echo "Deployed SHA: $EXPECTED_SHA"

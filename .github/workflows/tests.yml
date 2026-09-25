@@ -138,6 +138,8 @@ jobs:
             up -d redis nginx "app-$(cat ../deploy/active_color)"
 
       - name: Deploy
+        env:
+          DEPLOY_SHA: ${{ github.sha }}
         run: |
           chmod +x deploy/deploy.sh
           ./deploy/deploy.sh
