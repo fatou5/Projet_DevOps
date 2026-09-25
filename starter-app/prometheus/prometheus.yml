@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - /etc/prometheus/alert-rules.yml
+
+scrape_configs:
+  - job_name: "starter-app"
+    static_configs:
+      - targets:
+          - "app-blue:5000"
